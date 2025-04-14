@@ -4,7 +4,14 @@ import ListTodoSection from "./components/listTodoSection";
 import useListTodo from "./hooks/useListTodo";
 
 function App() {
-  const { listTodo, handlePostTodo, responsePostTodo } = useListTodo();
+  const {
+    listTodo,
+    handlePostTodo,
+    responsePostTodo,
+    isError,
+    massageError,
+    handleDelete,
+  } = useListTodo();
 
   return (
     <>
@@ -14,6 +21,9 @@ function App() {
           listTodo={listTodo}
           handlePostTodo={handlePostTodo}
           responsePostTodo={responsePostTodo}
+          isError={isError}
+          massageError={massageError}
+          handleDelete={handleDelete}
         />
       </div>
     </>

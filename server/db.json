@@ -1,28 +1,3 @@
 {
-  "listTodo": [
-    {
-      "id": "1",
-      "todo": "NCKANS"
-    },
-    {
-      "id": "2",
-      "todo": "Olahraga"
-    },
-    {
-      "id": "3",
-      "todo": "Mandi"
-    },
-    {
-      "id": "4",
-      "todo": "Kerja"
-    },
-    {
-      "id": "5",
-      "todo": "121d"
-    },
-    {
-      "id": "6",
-      "todo": "121vsddcd"
-    }
-  ]
+  "todos": []
 }
