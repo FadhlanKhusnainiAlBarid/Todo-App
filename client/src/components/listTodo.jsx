@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { createTheme, FloatingLabel } from "flowbite-react";
-import { Plus } from "lucide-react";
+import { Plus, CircleAlert } from "lucide-react";
 import Todo from "./todo";
 
-function ListTodo({ listTodo, handlePostTodo, responsePostTodo }) {
+function ListTodo({
+  listTodo,
+  handlePostTodo,
+  responsePostTodo,
+  isError,
+  massageError,
+  handleDelete,
+}) {
   const [makeTodo, setmakeTodo] = useState("");
+  const listContainer = useRef();
 
   useEffect(() => {
     if (responsePostTodo) {
@@ -47,9 +55,14 @@ function ListTodo({ listTodo, handlePostTodo, responsePostTodo }) {
   });
 
   return (
-    <ul className="space-y-4">
-      {listTodo.map((data, index) => (
-        <Todo key={data.id} data={data} index={index} />
+    <ul className="space-y-4" ref={listContainer}>
+      {listTodo?.map((data, index) => (
+        <Todo
+          key={data.id}
+          data={data}
+          index={index}
+          handleDelete={handleDelete}
+        />
       ))}
       <li className="relative group flex items-center gap-2">
         <Plus className="w-6 h-6 text-gray-400 group-has-focus:text-gray-500" />
@@ -61,6 +74,12 @@ function ListTodo({ listTodo, handlePostTodo, responsePostTodo }) {
             value={makeTodo}
             onChange={(e) => setmakeTodo(e.target.value)}
           />
+          {isError && (
+            <div className="flex items-center mt-1 gap-1.5 text-red-600">
+              <CircleAlert />
+              <span>{massageError}</span>
+            </div>
+          )}
         </form>
       </li>
     </ul>
