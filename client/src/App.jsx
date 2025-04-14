@@ -4,13 +4,17 @@ import ListTodoSection from "./components/listTodoSection";
 import useListTodo from "./hooks/useListTodo";
 
 function App() {
-  const { listTodo } = useListTodo();
+  const { listTodo, handlePostTodo, responsePostTodo } = useListTodo();
 
   return (
     <>
       <div className="container mx-auto">
         <Navbar />
-        <ListTodoSection listTodo={listTodo} />
+        <ListTodoSection
+          listTodo={listTodo}
+          handlePostTodo={handlePostTodo}
+          responsePostTodo={responsePostTodo}
+        />
       </div>
     </>
   );
