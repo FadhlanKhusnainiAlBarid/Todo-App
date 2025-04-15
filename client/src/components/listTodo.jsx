@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import { createTheme, FloatingLabel } from "flowbite-react";
-import { Plus, CircleAlert, ChevronRight } from "lucide-react";
+import { FloatingLabel } from "flowbite-react";
+import { Plus, CircleAlert, ChevronRight, ChevronDown } from "lucide-react";
 import Todo from "./todo";
 import TodoCompleted from "./todoCompleted";
 import { Button } from "flowbite-react";
 // import { DragDropProvider } from "@dnd-kit/react";
 import useListTodo from "../hooks/useListTodo";
+import { customThemeInput } from "../assets/customTheme";
 
 function ListTodo() {
   const {
@@ -13,7 +14,6 @@ function ListTodo() {
     handlePostTodo,
     responsePostTodo,
     isError,
-    massageError,
     handleDelete,
     handleUpdate,
     handleCompleted,
@@ -33,35 +33,6 @@ function ListTodo() {
     e.preventDefault();
     handlePostTodo(makeTodo);
   };
-
-  const customThemeInput = createTheme({
-    input: {
-      default: {
-        standard: {
-          sm: `peer block w-full appearance-none border-0 border-b-2 focus:border-b-2 ${
-            makeTodo ? "border-gray-400" : "border-transparent"
-          } bg-transparent px-0 py-2.5 text-xs text-gray-900 focus:border-gray-500 focus:outline-none focus:ring-0 dark:border-transparent dark:text-black dark:focus:border-gray-500`,
-          md: `peer block w-full appearance-none border-0 border-b-2 focus:border-b-2 ${
-            makeTodo
-              ? "border-gray-400 focus:border-gray-500"
-              : "border-transparent"
-          } bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:border-gray-500 focus:outline-none focus:ring-0 ${
-            makeTodo
-              ? "dark:border-gray-400 focus:border-gray-500"
-              : "dark:border-transparent"
-          } dark:text-black dark:focus:border-gray-500`,
-        },
-      },
-    },
-    label: {
-      default: {
-        standard: {
-          sm: "absolute top-2.5 -z-10 origin-[0] -translate-y-6 scale-75 text-xs font-medium text-gray-400 transition-transform duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-gray-500 dark:text-gray-400 peer-focus:dark:text-gray-500",
-          md: "absolute top-2.5 -z-10 origin-[0] -translate-y-6 scale-75 text-sm font-medium text-gray-400 transition-transform duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-gray-500 dark:text-gray-400 peer-focus:dark:text-gray-500",
-        },
-      },
-    },
-  });
 
   // const handleChangeSortable = (source, target, from, to) => {
   //   let newArray;
@@ -141,7 +112,11 @@ function ListTodo() {
             onClick={() => setdropDownCompleted(!dropDownCompleted)}
             className="cursor-pointer gap-1"
           >
-            <ChevronRight className="w-5 h-5" />
+            {dropDownCompleted ? (
+              <ChevronDown className="w-5 h-5" />
+            ) : (
+              <ChevronRight className="w-5 h-5" />
+            )}
             completed
           </Button>
         </li>
@@ -150,7 +125,14 @@ function ListTodo() {
         listTodo?.map(
           (data) =>
             data.completed === true && (
-              <TodoCompleted key={data.id} data={data} />
+              <TodoCompleted
+                key={data.id}
+                data={data}
+                handleCompleted={handleCompleted}
+                handleDelete={handleDelete}
+                handleUpdate={handleUpdate}
+                isError={isError}
+              />
             )
         )}
     </ul>
