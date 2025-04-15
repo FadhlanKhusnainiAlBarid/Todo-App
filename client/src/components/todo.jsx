@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, createTheme } from "flowbite-react";
-import { Trash } from "lucide-react";
+import { Checkbox, createTheme, FloatingLabel } from "flowbite-react";
+import { Trash, Pencil, CircleAlert } from "lucide-react";
 import {
   Button,
   Modal,
@@ -8,16 +8,27 @@ import {
   ModalFooter,
   ModalHeader,
 } from "flowbite-react";
+// import { useSortable } from "@dnd-kit/react/sortable";
 
-function Todo({ data, handleDelete }) {
+function Todo({
+  data,
+  index,
+  handleCompleted,
+  handleDelete,
+  handleUpdate,
+  isError,
+}) {
+  // const { ref } = useSortable({ id: data.id, index });
+
   const [modalDelete, setmodalDelete] = useState(false);
+  const [modalUpdate, setmodalUpdate] = useState(false);
+  const [updateTodo, setupdateTodo] = useState(data.todo);
 
   const customThemeCheckbox = createTheme({
     base: "h-5 w-5 appearance-none rounded border border-2 border-gray-300 bg-gray-100 bg-[length:0.55em_0.55em] bg-center bg-no-repeat checked:border-transparent checked:bg-current checked:bg-check-icon focus:outline-none focus:ring-0 focus:ring-offset-0 dark:border-gray-400 dark:bg-white dark:checked:border-transparent dark:checked:bg-current",
     color: {
       default:
         "text-primary-600 focus:ring-primary-600 dark:ring-offset-gray-800 dark:focus:ring-primary-600",
-      // dark: "text-gray-800 focus:ring-gray-800 dark:ring-offset-gray-800 dark:focus:ring-gray-800",
     },
     indeterminate:
       "border-transparent bg-current bg-dash-icon dark:border-transparent dark:bg-current",
@@ -43,18 +54,71 @@ function Todo({ data, handleDelete }) {
       popup: "border-t",
     },
   });
+
+  const customThemeInput = createTheme({
+    input: {
+      default: {
+        standard: {
+          sm: `peer block w-full appearance-none border-0 border-b-2 focus:border-b-2 border-gray-400 bg-transparent px-0 py-2.5 text-xs text-gray-900 focus:border-gray-500 focus:outline-none focus:ring-0 dark:border-transparent dark:text-black dark:focus:border-gray-500`,
+          md: `peer block w-full appearance-none border-0 border-b-2 focus:border-b-2 border-gray-400 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:border-gray-500 focus:outline-none focus:ring-0 dark:border-gray-400 focus:border-gray-500 dark:text-black dark:focus:border-gray-500`,
+        },
+      },
+      error: {
+        standard: {
+          sm: "peer block w-full appearance-none border-0 border-b-2 border-red-600 bg-transparent px-0 py-2.5 text-xs text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0 dark:border-red-500 dark:text-black dark:focus:border-red-500",
+          md: "peer block w-full appearance-none border-0 border-b-2 border-red-600 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0 dark:border-red-500 dark:text-black dark:focus:border-red-500",
+        },
+      },
+    },
+    label: {
+      default: {
+        standard: {
+          sm: "absolute top-2.5 z-30 origin-[0] -translate-y-6 scale-75 text-xs font-medium text-gray-400 transition-transform duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-gray-500 dark:text-gray-400 peer-focus:dark:text-gray-500",
+          md: "absolute top-2.5 z-30 origin-[0] -translate-y-6 scale-75 text-sm font-medium text-gray-400 transition-transform duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-gray-500 dark:text-gray-400 peer-focus:dark:text-gray-500",
+        },
+      },
+      error: {
+        standard: {
+          sm: "absolute top-3 z-30 origin-[0] -translate-y-6 scale-75 text-xs text-red-600 transition-transform duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 dark:text-red-500",
+          md: "absolute top-3 z-30 origin-[0] -translate-y-6 scale-75 text-sm text-red-600 transition-transform duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 dark:text-red-500",
+        },
+      },
+    },
+  });
+
+  const handleFormUpdate = (e) => {
+    e.preventDefault();
+    handleUpdate(data.id, updateTodo);
+    setTimeout(() => {
+      if (isError.updateError) {
+        setmodalUpdate(false);
+      }
+    }, 1000);
+  };
   return (
     <li className="flex justify-between">
       <div className="inline-flex items-center gap-2.5">
-        <Checkbox theme={customThemeCheckbox} />
+        <Checkbox
+          onClick={() => handleCompleted(data.id, data.completed)}
+          theme={customThemeCheckbox}
+          value={data.completed}
+        />
         <p className="text-sm">{data.todo}</p>
       </div>
-      <button
-        onClick={() => setmodalDelete(true)}
-        className="cursor-pointer text-red-400 active:scale-95"
-      >
-        <Trash />
-      </button>
+      <div className="space-x-2.5">
+        <button
+          onClick={() => setmodalDelete(true)}
+          className="cursor-pointer text-red-400 active:scale-95"
+        >
+          <Trash />
+        </button>
+        <button
+          onClick={() => setmodalUpdate(true)}
+          className="cursor-pointer text-blue-400 active:scale-95"
+        >
+          <Pencil />
+        </button>
+      </div>
       <Modal
         dismissible={false}
         theme={customThemeModal}
@@ -72,6 +136,43 @@ function Todo({ data, handleDelete }) {
         <ModalFooter>
           <Button onClick={() => handleDelete(data.id)}>I accept</Button>
           <Button color="gray" onClick={() => setmodalDelete(false)}>
+            Decline
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Modal
+        dismissible={false}
+        theme={customThemeModal}
+        show={modalUpdate}
+        onClose={() => setmodalUpdate(false)}
+      >
+        <ModalHeader>Terms of Service</ModalHeader>
+        <ModalBody>
+          <div className="space-y-6">
+            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              Are you sure delete this todo
+            </p>
+            <form onSubmit={handleFormUpdate}>
+              <FloatingLabel
+                theme={customThemeInput}
+                variant="standard"
+                label="Update todo"
+                color={isError.updateError ? `error` : `default`}
+                value={updateTodo}
+                onChange={(e) => setupdateTodo(e.target.value)}
+              />
+              {isError.updateError && (
+                <div className="flex items-center mt-1 gap-1.5 text-red-600">
+                  <CircleAlert />
+                  <span>{isError.massageErrorUpdate}</span>
+                </div>
+              )}
+            </form>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={handleFormUpdate}>I accept</Button>
+          <Button color="gray" onClick={() => setmodalUpdate(false)}>
             Decline
           </Button>
         </ModalFooter>
