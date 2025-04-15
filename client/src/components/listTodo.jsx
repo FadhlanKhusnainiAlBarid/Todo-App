@@ -1,18 +1,27 @@
 import React, { useEffect, useState, useRef } from "react";
 import { createTheme, FloatingLabel } from "flowbite-react";
-import { Plus, CircleAlert } from "lucide-react";
+import { Plus, CircleAlert, ChevronRight } from "lucide-react";
 import Todo from "./todo";
+import TodoCompleted from "./todoCompleted";
+import { Button } from "flowbite-react";
+// import { DragDropProvider } from "@dnd-kit/react";
+import useListTodo from "../hooks/useListTodo";
 
-function ListTodo({
-  listTodo,
-  handlePostTodo,
-  responsePostTodo,
-  isError,
-  massageError,
-  handleDelete,
-}) {
+function ListTodo() {
+  const {
+    listTodo,
+    handlePostTodo,
+    responsePostTodo,
+    isError,
+    massageError,
+    handleDelete,
+    handleUpdate,
+    handleCompleted,
+  } = useListTodo();
   const [makeTodo, setmakeTodo] = useState("");
+  const [dropDownCompleted, setdropDownCompleted] = useState(false);
   const listContainer = useRef();
+  // const { handleChangeSortable } = useListTodo();
 
   useEffect(() => {
     if (responsePostTodo) {
@@ -54,16 +63,60 @@ function ListTodo({
     },
   });
 
+  // const handleChangeSortable = (source, target, from, to) => {
+  //   let newArray;
+
+  //   newArray = data.map((data) =>
+  //     data.id === source.id
+  //       ? { ...data, todo: to.todo }
+  //       : data || data.id === target.id
+  //       ? { ...data, todo: from.todo }
+  //       : data
+  //   );
+
+  //   setdata(newArray);
+  // };
+
   return (
     <ul className="space-y-4" ref={listContainer}>
-      {listTodo?.map((data, index) => (
-        <Todo
-          key={data.id}
-          data={data}
-          index={index}
-          handleDelete={handleDelete}
-        />
-      ))}
+      {/* <DragDropProvider
+        onDragOver={(e) => {
+          console.log(listTodo);
+          const { operation } = e;
+          const { source, target } = operation;
+          if (source.id === target.id) {
+            return;
+          }
+
+          console.log(source.id, target.id);
+
+          const from = listTodo.find((i) => i.id === source.id);
+          const to = listTodo.find((i) => i.id === target.id);
+          setTimeout(() => {
+            handleChangeSortable(source, target, from, to);
+          }, 2000);
+          // console.log(from, to);
+
+          // newArray = newArray.map((data) =>
+          //   data.id === target.id ? { ...data, todo: from.todo } : data
+          // );
+        }}
+      > */}
+      {listTodo?.map(
+        (data, index) =>
+          data.completed === false && (
+            <Todo
+              key={data.id}
+              data={data}
+              index={index}
+              handleCompleted={handleCompleted}
+              handleDelete={handleDelete}
+              handleUpdate={handleUpdate}
+              isError={isError}
+            />
+          )
+      )}
+      {/* </DragDropProvider> */}
       <li className="relative group flex items-center gap-2">
         <Plus className="w-6 h-6 text-gray-400 group-has-focus:text-gray-500" />
         <form onSubmit={handleSubmit}>
@@ -74,14 +127,32 @@ function ListTodo({
             value={makeTodo}
             onChange={(e) => setmakeTodo(e.target.value)}
           />
-          {isError && (
+          {isError.postError && (
             <div className="flex items-center mt-1 gap-1.5 text-red-600">
               <CircleAlert />
-              <span>{massageError}</span>
+              <span>{isError.massageErrorPost}</span>
             </div>
           )}
         </form>
       </li>
+      {listTodo?.find((data) => data.completed === true) && (
+        <li>
+          <Button
+            onClick={() => setdropDownCompleted(!dropDownCompleted)}
+            className="cursor-pointer gap-1"
+          >
+            <ChevronRight className="w-5 h-5" />
+            completed
+          </Button>
+        </li>
+      )}
+      {dropDownCompleted &&
+        listTodo?.map(
+          (data) =>
+            data.completed === true && (
+              <TodoCompleted key={data.id} data={data} />
+            )
+        )}
     </ul>
   );
 }
