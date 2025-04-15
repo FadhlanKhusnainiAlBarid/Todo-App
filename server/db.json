@@ -1,39 +1,19 @@
 {
   "todos": [
     {
-      "id": "c14c",
-      "todo": "Tidak Mandi ascscs",
-      "completed": true
-    },
-    {
-      "id": "53ed",
-      "todo": "Makan",
-      "completed": false
-    },
-    {
-      "id": "32de",
-      "todo": "Sinau",
-      "completed": true
-    },
-    {
       "id": "dbc9",
       "todo": "KMksk",
       "completed": true
     },
     {
-      "id": "d9dd",
-      "todo": "ISMIS",
+      "id": "beac",
+      "todo": "Masak air",
       "completed": true
     },
     {
-      "id": "2fd3",
-      "todo": "micmei",
-      "completed": true
-    },
-    {
-      "id": "5c31",
-      "todo": "mcieonaoeca",
-      "completed": true
+      "id": "57c5",
+      "todo": "akcmd",
+      "completed": false
     }
   ]
 }

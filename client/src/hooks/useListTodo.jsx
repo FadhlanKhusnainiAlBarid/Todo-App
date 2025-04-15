@@ -12,7 +12,7 @@ function useListTodo() {
   const [isError, setisError] = useState({
     postError: false,
     massageErrorPost: "",
-    // rowsUpdate: ["s"],
+    rowsUpdate: ["s"],
     updateError: false,
     massageErrorUpdate: "",
   });
@@ -72,7 +72,7 @@ function useListTodo() {
       (prev) =>
         (prev = {
           ...prev,
-          // rowsUpdate: prev.rowsUpdate.includes((data) => data != id),
+          // rowsUpdate: [],
           updateError: false,
           massageErrorUpdate: "",
         })
@@ -83,7 +83,7 @@ function useListTodo() {
         (prev) =>
           (prev = {
             ...prev,
-            // rowsUpdate: [...prev.rowsUpdate, id],
+            // rowsUpdate: [...prev?.rowsUpdate, id],
             updateError: true,
             massageErrorUpdate: "Todo has a minimum of 3 characters",
           })
