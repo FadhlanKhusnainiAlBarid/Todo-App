@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CircleAlert } from "lucide-react";
 import {
   Button,
@@ -22,12 +22,20 @@ function ModalUpdate({
   const handleFormUpdate = (e) => {
     e.preventDefault();
     handleUpdate(data.id, updateTodo);
-    setTimeout(() => {
-      if (!isError.updateError) {
-        setmodalUpdate(false);
-      }
-    }, 500);
+    handleCloseModal(isError.updateError);
   };
+
+  const handleCloseModal = (cdc) => {
+    if (cdc === false) {
+      setmodalUpdate(false);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (isError.updateError === false) {
+  //     setmodalUpdate(false);
+  //   }
+  // }, [isError.updateError]);
   return (
     <Modal
       dismissible={false}
