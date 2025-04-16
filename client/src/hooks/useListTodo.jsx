@@ -68,6 +68,8 @@ function useListTodo() {
   };
 
   const handleUpdate = async (id, updateTodo) => {
+    console.log(updateTodo, "this input string");
+
     setisError(
       (prev) =>
         (prev = {
@@ -90,6 +92,7 @@ function useListTodo() {
       );
       return;
     }
+
     try {
       await axiosInstance.patch(`/todos/${id}`, {
         todo: updateTodo,

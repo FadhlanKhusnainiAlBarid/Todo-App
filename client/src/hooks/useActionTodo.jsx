@@ -3,8 +3,6 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 function useActionTodo(data, handleDelete, handleUpdate) {
-  const [updateTodo, setupdateTodo] = useState(data.todo);
-
   const showSwalDelete = () => {
     withReactContent(Swal)
       .fire({
@@ -28,49 +26,40 @@ function useActionTodo(data, handleDelete, handleUpdate) {
           Swal.fire({
             title: "Cancelled",
             text: "Completed you todo before deleted :)",
-            icon: "warning",
+            icon: "error",
           });
         }
       });
   };
 
-  const showSwalUpdate = () => {
-    const swalStyling = Swal.mixin({
-      customClass: {
-        input: "",
-        inputLabel: "text-2xl",
-      },
+  const showSwalUpdate = async (updateTodo, setupdateTodo) => {
+    const { isConfirmed, dismiss, value } = await Swal.fire({
+      title: "Edit todo",
+      inputLabel: "Todo",
+      input: "text",
       inputValue: `${updateTodo}`,
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Look up",
     });
 
-    swalStyling
-      .fire({
-        title: "Edit todo",
-        didOpen: () => {
-          const input = Swal.getInput();
-          input.oninput = (e) => {
-            setupdateTodo(e.target.value);
-          };
-        },
-        inputLabel: "Todo",
-        input: "text",
-        inputAttributes: {
-          autocapitalize: "off",
-        },
-        showCancelButton: true,
-        confirmButtonText: "Yes, Edit todo!",
-        allowOutsideClick: () => !Swal.isLoading(),
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: "Edit todo!",
-            text: "Your todo has been Updated.",
-            icon: "success",
-          });
-          handleUpdate(data.id, updateTodo);
-        }
+    if (isConfirmed) {
+      setupdateTodo(value);
+      Swal.fire({
+        title: "Edit!",
+        text: "Your todo has been Updated.",
+        icon: "success",
       });
+      handleUpdate(data.id, value);
+    } else if (dismiss === Swal.DismissReason.cancel) {
+      Swal.fire({
+        title: "Cancelled",
+        text: "Completed you todo before deleted :)",
+        icon: "error",
+      });
+    }
   };
 
   return { showSwalDelete, showSwalUpdate };
