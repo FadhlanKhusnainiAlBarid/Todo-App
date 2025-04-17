@@ -1,34 +1,29 @@
 {
   "todos": [
     {
-      "id": "c579",
-      "todo": "aaa",
-      "completed": false
-    },
-    {
-      "id": "9170",
-      "todo": "makan siang",
-      "completed": false
-    },
-    {
       "id": "826f",
-      "todo": "cddcd",
+      "todo": "Masak air",
       "completed": false
     },
     {
       "id": "d232",
-      "todo": "ccdcdc",
+      "todo": "Tidur siang",
       "completed": false
     },
     {
       "id": "4bfb",
-      "todo": "Belajar package dndkit",
+      "todo": "Belajar gsap package",
       "completed": true
     },
     {
       "id": "194e",
-      "todo": "cdc",
+      "todo": "Sedekah jumat",
       "completed": true
+    },
+    {
+      "id": "1681",
+      "todo": "Bruh",
+      "completed": false
     }
   ]
 }

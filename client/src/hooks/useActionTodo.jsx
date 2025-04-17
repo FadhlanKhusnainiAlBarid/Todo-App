@@ -45,7 +45,12 @@ function useActionTodo(data, handleDelete, handleUpdate) {
       showCancelButton: true,
       confirmButtonText: "Yes, Edit it!",
       inputValidator: (value) => {
-        return value.length < 3 && "Todo has a minimum of 3 characters";
+        if (value.length < 3) {
+          return "Todo has a minimum of 3 characters";
+        }
+        if (updateTodo === value) {
+          return "Todo belum di edit";
+        }
       },
     });
 

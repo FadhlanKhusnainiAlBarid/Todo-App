@@ -3,17 +3,8 @@ import { Checkbox } from "flowbite-react";
 import { Trash, Pencil } from "lucide-react";
 import { customThemeCheckbox } from "../assets/customTheme";
 import useActionTodo from "../hooks/useActionTodo";
-// import { useSortable } from "@dnd-kit/react/sortable";
 
-function Todo({
-  data,
-  index,
-  handleCompleted,
-  handleDelete,
-  handleUpdate,
-  isError,
-}) {
-  // const { ref } = useSortable({ id: data.id, index });
+function Todo({ data, index, handleCompleted, handleDelete, handleUpdate }) {
   const { showSwalDelete, showSwalUpdate } = useActionTodo(
     data,
     handleDelete,
