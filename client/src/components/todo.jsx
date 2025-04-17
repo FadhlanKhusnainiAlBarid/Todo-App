@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Checkbox } from "flowbite-react";
 import { Trash, Pencil } from "lucide-react";
 import { customThemeCheckbox } from "../assets/customTheme";
@@ -36,7 +36,7 @@ function Todo({
       </div>
       <div className="space-x-2.5">
         <button
-          onClick={showSwalDelete}
+          onClick={() => showSwalDelete(data.completed)}
           className="cursor-pointer text-red-400 active:scale-95"
         >
           <Trash className="w-6 h-6 md:w-7 md:h-7 xl:w-10 xl:h-10" />

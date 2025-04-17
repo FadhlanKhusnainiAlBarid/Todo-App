@@ -1,9 +1,8 @@
-import { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 function useActionTodo(data, handleDelete, handleUpdate) {
-  const showSwalDelete = () => {
+  const showSwalDelete = (completed) => {
     withReactContent(Swal)
       .fire({
         title: "Are you sure?",
@@ -25,7 +24,9 @@ function useActionTodo(data, handleDelete, handleUpdate) {
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.fire({
             title: "Cancelled",
-            text: "Completed you todo before deleted :)",
+            text: completed
+              ? "Congratulations on completing the todo :)"
+              : "Completed you todo before deleted :)",
             icon: "error",
           });
         }
@@ -42,7 +43,10 @@ function useActionTodo(data, handleDelete, handleUpdate) {
         autocapitalize: "off",
       },
       showCancelButton: true,
-      confirmButtonText: "Look up",
+      confirmButtonText: "Yes, Edit it!",
+      inputValidator: (value) => {
+        return value.length < 3 && "Todo has a minimum of 3 characters";
+      },
     });
 
     if (isConfirmed) {
@@ -56,11 +60,15 @@ function useActionTodo(data, handleDelete, handleUpdate) {
     } else if (dismiss === Swal.DismissReason.cancel) {
       Swal.fire({
         title: "Cancelled",
-        text: "Completed you todo before deleted :)",
+        text: "cencel Edit todo",
         icon: "error",
       });
     }
   };
+
+  // useEffect(() => {
+  //   console.log(isError.updateError);
+  // }, [isError]);
 
   return { showSwalDelete, showSwalUpdate };
 }

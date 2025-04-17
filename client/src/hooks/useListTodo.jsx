@@ -12,7 +12,7 @@ function useListTodo() {
   const [isError, setisError] = useState({
     postError: false,
     massageErrorPost: "",
-    rowsUpdate: ["s"],
+    // rowsUpdate: ["s"],
     updateError: false,
     massageErrorUpdate: "",
   });
@@ -68,8 +68,6 @@ function useListTodo() {
   };
 
   const handleUpdate = async (id, updateTodo) => {
-    console.log(updateTodo, "this input string");
-
     setisError(
       (prev) =>
         (prev = {

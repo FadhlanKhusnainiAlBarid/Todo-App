@@ -1,23 +1,13 @@
 {
   "todos": [
     {
-      "id": "57c5",
-      "todo": "bbb",
-      "completed": false
-    },
-    {
-      "id": "95b5",
-      "todo": "cdimecdcvfvf",
-      "completed": false
-    },
-    {
       "id": "c579",
-      "todo": "cdc",
+      "todo": "aaa",
       "completed": false
     },
     {
       "id": "9170",
-      "todo": "cdc",
+      "todo": "makan siang",
       "completed": false
     },
     {
@@ -31,24 +21,14 @@
       "completed": false
     },
     {
-      "id": "f7b3",
-      "todo": "vfvfv",
-      "completed": false
-    },
-    {
-      "id": "2a16",
-      "todo": "vfsvs",
-      "completed": false
-    },
-    {
       "id": "4bfb",
-      "todo": "cadcccdcxsxs",
+      "todo": "Belajar package dndkit",
       "completed": true
     },
     {
       "id": "194e",
       "todo": "cdc",
-      "completed": false
+      "completed": true
     }
   ]
 }
