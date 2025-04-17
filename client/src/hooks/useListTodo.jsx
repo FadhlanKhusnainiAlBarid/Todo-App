@@ -109,32 +109,6 @@ function useListTodo() {
     fetchListTodo();
   };
 
-  // const handleChangeSortable = async (source, target, from, to) => {
-  //   // let newArray;
-
-  //   const responseSource = await axiosInstance.get(`/todos/${source.id}`);
-  //   const responseTarget = await axiosInstance.get(`/todos/${target.id}`);
-  //   console.log(responseSource, responseTarget);
-
-  //   // newArray = data.map((data) =>
-  //   //   data.id === source.id
-  //   //     ? { ...data, todo: to.todo }
-  //   //     : data || data.id === target.id
-  //   //     ? { ...data, todo: from.todo }
-  //   //     : data
-  //   // );
-  //   console.log(source, target, from, to);
-
-  //   // setdata(newArray);
-  //   await axiosInstance.patch(`/todos/${target.id}`, {
-  //     todo: from.todo,
-  //   });
-  //   await axiosInstance.patch(`/todos/${source.id}`, {
-  //     todo: to.todo,
-  //   });
-  //   fetchListTodo();
-  // };
-
   return {
     listTodo,
     handlePostTodo,

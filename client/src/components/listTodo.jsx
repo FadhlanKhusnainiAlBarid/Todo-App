@@ -5,7 +5,6 @@ import Todo from "./todo";
 import TodoCompleted from "./todoCompleted";
 import { Button } from "flowbite-react";
 import { ToastContainer, toast } from "react-toastify";
-// import { DragDropProvider } from "@dnd-kit/react";
 import useListTodo from "../hooks/useListTodo";
 import { customThemeInput } from "../assets/customTheme";
 
@@ -22,7 +21,6 @@ function ListTodo() {
   const [makeTodo, setmakeTodo] = useState("");
   const [dropDownCompleted, setdropDownCompleted] = useState(false);
   const listContainer = useRef();
-  // const { handleChangeSortable } = useListTodo();
 
   useEffect(() => {
     if (responsePostTodo) {
@@ -40,46 +38,9 @@ function ListTodo() {
     }
   };
 
-  // const handleChangeSortable = (source, target, from, to) => {
-  //   let newArray;
-
-  //   newArray = data.map((data) =>
-  //     data.id === source.id
-  //       ? { ...data, todo: to.todo }
-  //       : data || data.id === target.id
-  //       ? { ...data, todo: from.todo }
-  //       : data
-  //   );
-
-  //   setdata(newArray);
-  // };
-
   return (
     <>
       <ul className="space-y-4" ref={listContainer}>
-        {/* <DragDropProvider
-        onDragOver={(e) => {
-          console.log(listTodo);
-          const { operation } = e;
-          const { source, target } = operation;
-          if (source.id === target.id) {
-            return;
-          }
-
-          console.log(source.id, target.id);
-
-          const from = listTodo.find((i) => i.id === source.id);
-          const to = listTodo.find((i) => i.id === target.id);
-          setTimeout(() => {
-            handleChangeSortable(source, target, from, to);
-          }, 2000);
-          // console.log(from, to);
-
-          // newArray = newArray.map((data) =>
-          //   data.id === target.id ? { ...data, todo: from.todo } : data
-          // );
-        }}
-      > */}
         {listTodo?.map(
           (data, index) =>
             data.completed === false && (
@@ -94,7 +55,6 @@ function ListTodo() {
               />
             )
         )}
-        {/* </DragDropProvider> */}
         <li className="relative group flex items-center gap-2">
           <Plus className="w-6 h-6 md:w-7 md:h-7 xl:w-10 xl:h-10 text-gray-400 group-has-focus:text-gray-500" />
           <form onSubmit={handleSubmit}>
