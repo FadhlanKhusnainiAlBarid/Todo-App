@@ -13,16 +13,41 @@
     {
       "id": "4bfb",
       "todo": "Belajar gsap package",
-      "completed": true
-    },
-    {
-      "id": "194e",
-      "todo": "Sedekah jumat",
-      "completed": true
+      "completed": false
     },
     {
       "id": "1681",
       "todo": "Bruh",
+      "completed": true
+    },
+    {
+      "id": "6061",
+      "todo": "Tets",
+      "completed": false
+    },
+    {
+      "id": "e2cb",
+      "todo": "cbjd",
+      "completed": false
+    },
+    {
+      "id": "732e",
+      "todo": "dcdc",
+      "completed": false
+    },
+    {
+      "id": "6374",
+      "todo": "cdc",
+      "completed": false
+    },
+    {
+      "id": "4579",
+      "todo": "dccddc",
+      "completed": false
+    },
+    {
+      "id": "27a9",
+      "todo": "dcdc",
       "completed": false
     }
   ]
