@@ -4,19 +4,7 @@
       "id": "826f",
       "todo": "Masak air",
       "completed": false,
-      "order": 2
-    },
-    {
-      "id": "d232",
-      "todo": "Tidur siang",
-      "completed": false,
       "order": 0
-    },
-    {
-      "id": "4bfb",
-      "todo": "Belajar gsap package",
-      "completed": false,
-      "order": 1
     }
   ]
 }
