@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  // baseURL: "http://localhost:3000",
-  baseURL: "https://wholesale-cooked-prince.glitch.me/api",
+  baseURL: "http://localhost:3000",
+  // baseURL: "https://wholesale-cooked-prince.glitch.me/api",
 });
 
 function useListTodo() {
@@ -20,7 +20,8 @@ function useListTodo() {
 
   const fetchListTodo = async () => {
     const { data } = await axiosInstance.get("/todos");
-    setlistTodo(data);
+    const sorted = await data.sort((a, b) => a.order - b.order);
+    setlistTodo(sorted);
   };
 
   useEffect(() => {
@@ -112,6 +113,7 @@ function useListTodo() {
 
   return {
     listTodo,
+    setlistTodo,
     handlePostTodo,
     responsePostTodo,
     isError,
