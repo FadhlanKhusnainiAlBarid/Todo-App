@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Checkbox } from "flowbite-react";
 import { Trash, Pencil, GripVertical } from "lucide-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { customThemeCheckbox } from "../assets/customTheme";
 import useActionTodo from "../hooks/useActionTodo";
+import gsap from "gsap";
+
+function gabungkanRef(...refs) {
+  return (element) => {
+    refs.forEach((ref) => {
+      if (typeof ref === "function") {
+        ref(element);
+      } else if (ref != null) {
+        ref.current = element;
+      }
+    });
+  };
+}
 
 function Todo({
+  listTodo,
   data,
   id,
   index,
@@ -16,6 +30,7 @@ function Todo({
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
+  const todoRefs = useRef({});
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -29,8 +44,35 @@ function Todo({
   );
   const [updateTodo, setupdateTodo] = useState(data.todo);
 
+  const mkdc = todoRefs.current.length;
+
+  useEffect(() => {
+    console.log(mkdc);
+    if (listTodo.length === 0) return;
+
+    const latestId = listTodo[listTodo.length - 1].id;
+    const element = todoRefs.current[latestId];
+
+    if (element) {
+      gsap.fromTo(
+        element,
+        { opacity: 0, x: 90 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: "circ.out",
+        }
+      );
+    }
+  }, [todoRefs.current]);
+
   return (
-    <li ref={setNodeRef} style={style} className="flex justify-between w-full">
+    <li
+      ref={gabungkanRef(setNodeRef, (el) => (todoRefs.current[data.id] = el))}
+      style={style}
+      className="flex justify-between w-full"
+    >
       <div className="flex items-start gap-2.5 w-3/4 md:w-[91%] xl:w-[92%] 2xl:w-[94%]">
         <div
           {...listeners}

@@ -88,6 +88,7 @@ function ListTodo() {
               (data, index) =>
                 data.completed === false && (
                   <Todo
+                    listTodo={listTodo}
                     key={data.id}
                     id={data.id}
                     data={data}
